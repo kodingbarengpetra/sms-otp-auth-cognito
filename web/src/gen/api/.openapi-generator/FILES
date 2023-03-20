@@ -1,0 +1,12 @@
+.openapi-generator-ignore
+apis/DefaultApi.ts
+apis/index.ts
+index.ts
+models/AuthStartAuthRequest.ts
+models/AuthStartAuthResponse.ts
+models/AuthVerifyOtpRequest.ts
+models/AuthVerifyOtpResponse.ts
+models/ForbiddenErrorResponse.ts
+models/RestrictedResponse.ts
+models/index.ts
+runtime.ts

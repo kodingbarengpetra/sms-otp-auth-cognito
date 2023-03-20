@@ -1,0 +1,110 @@
+openapi: "3.1.0"
+info:
+  title: Koding Bareng Petra SMS OTP Auth
+  version: 1.0.0
+
+paths:
+  /auth/start-auth:
+    post:
+      summary: Start authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Auth_StartAuthRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Auth_StartAuthResponse'
+  /auth/verify-otp:
+    post:
+      summary: Verify OTP
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Auth_VerifyOtpRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Auth_VerifyOtpResponse'
+  /restricted:
+    get:
+      summary: Restricted
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestrictedResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+components:
+  schemas:
+    Auth_StartAuthRequest:
+      type: object
+      required:
+        - phoneNumber
+      properties:
+        phoneNumber:
+          type: string
+          example: "+6281234567890"
+    Auth_StartAuthResponse:
+      type: object
+      required:
+        - verifySession
+      properties:
+        verifySession:
+          type: string
+    Auth_VerifyOtpRequest:
+      type: object
+      required:
+        - verifySession
+        - otp
+      properties:
+        verifySession:
+          type: string
+        otp:
+          type: string
+    Auth_VerifyOtpResponse:
+      type: object
+      required:
+        - accessToken
+        - refreshToken
+        - expiresAt
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        expiresAt:
+          type: string
+    RestrictedResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+    ForbiddenErrorResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
